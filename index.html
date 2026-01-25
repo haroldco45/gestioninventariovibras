@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GESTIÓN DE INVENTARIOS</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #065f46 0%, #0d9488 100%); min-height: 100vh; }
+        
+        /* Login */
+        .login-container { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .login-box { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 25px 50px rgba(0,0,0,0.25); width: 100%; max-width: 420px; border-top: 5px solid #10b981; }
+        .login-title { text-align: center; font-size: 24px; font-weight: bold; color: #1f2937; margin-bottom: 5px; }
+        .login-subtitle { text-align: center; color: #10b981; font-size: 12px; letter-spacing: 3px; margin-bottom: 30px; }
+        
+        /* Forms */
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: 600; color: #374151; margin-bottom: 6px; font-size: 14px; }
+        .form-group input, .form-group select { width: 100%; padding: 14px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 15px; transition: all 0.3s; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: #10b981; box-shadow: 0 0 0 3px rgba(16,185,129,0.2); }
+        
+        .btn { padding: 14px 24px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; transition: all 0.3s; font-size: 15px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-primary { background: #10b981; color: white; width: 100%; }
+        .btn-primary:hover { background: #059669; transform: translateY(-2px); }
+        .btn-secondary { background: #6b7280; color: white; }
+        .btn-secondary:hover { background: #4b5563; }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-warning { background: #f59e0b; color: white; }
+        .btn-warning:hover { background: #d97706; }
+        .btn-info { background: #3b82f6; color: white; }
+        .btn-info:hover { background: #2563eb; }
+        .btn-success { background: #16a34a; color: white; }
+        .btn-success:hover { background: #15803d; }
+        
+        .link-btn { background: none; border: none; color: #10b981; cursor: pointer; font-size: 14px; margin-top: 15px; }
+        .link-btn:hover { text-decoration: underline; }
+        
+        .alert { padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 14px; }
+        .alert-error { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+        .alert-success { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+        
+        /* App Container */
+        .app-container { display: none; min-height: 100vh; background: #f3f4f6; }
+        
+        /* Header */
+        .header { background: linear-gradient(135deg, #065f46 0%, #0d9488 100%); color: white; padding: 15px 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 15px; }
+        .header-title { font-size: 20px; font-weight: bold; }
+        .header-subtitle { font-size: 11px; letter-spacing: 2px; color: #a7f3d0; }
+        .header-time { background: rgba(255,255,255,0.2); padding: 10px 20px; border-radius: 10px; font-size: 14px; }
+        .header-user { text-align: right; font-size: 13px; }
+        .header-user strong { display: block; }
+        .header-user span { color: #a7f3d0; }
+        .btn-logout { background: #ef4444; color: white; padding: 8px 16px; font-size: 13px; }
+        
+        /* Tabs */
+        .tabs-container { max-width: 1400px; margin: 20px auto; padding: 0 20px; }
+        .tabs { display: flex; flex-wrap: wrap; gap: 5px; background: #e5e7eb; padding: 5px; border-radius: 15px; }
+        .tab { flex: 1; min-width: 120px; padding: 12px 15px; border: none; background: transparent; font-weight: 600; cursor: pointer; border-radius: 10px; transition: all 0.3s; font-size: 14px; color: #4b5563; }
+        .tab:hover { background: #d1d5db; }
+        .tab.active { background: #10b981; color: white; box-shadow: 0 4px 10px rgba(16,185,129,0.3); }
+        
+        /* Content */
+        .content-container { max-width: 1400px; margin: 0 auto 30px; padding: 0 20px; }
+        .content-box { background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border-top: 5px solid #10b981; }
+        .content-title { font-size: 20px; font-weight: bold; color: #1f2937; margin-bottom: 25px; }
+        
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        /* Grid */
+        .grid { display: grid; gap: 15px; }
+        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+        .grid-4 { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+        
+        /* Tables */
+        .table-container { overflow-x: auto; margin: 20px 0; max-height: 400px; overflow-y: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th { background: #f3f4f6; padding: 12px 15px; text-align: left; font-weight: 600; color: #374151; position: sticky; top: 0; }
+        td { padding: 12px 15px; border-bottom: 1px solid #e5e7eb; }
+        tr:hover { background: #f9fafb; }
+        .text-right { text-align: right; }
+        .text-center { text-align: center; }
+        
+        /* Boxes */
+        .info-box { background: #f0fdf4; border: 2px solid #86efac; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+        .info-box-title { font-weight: 600; color: #166534; margin-bottom: 5px; }
+        .info-box-text { color: #15803d; font-size: 14px; }
+        
+        .warning-box { background: #fefce8; border: 2px solid #fde047; border-radius: 12px; padding: 15px; margin-bottom: 20px; }
+        
+        .total-box { background: #1f2937; color: white; padding: 25px; border-radius: 15px; margin-top: 20px; border-left: 5px solid #10b981; }
+        .total-box .label { color: #9ca3af; font-size: 14px; }
+        .total-box .value { font-size: 32px; font-weight: bold; color: #34d399; }
+        
+        /* Search */
+        .search-box { position: relative; }
+        .search-results { position: absolute; top: 100%; left: 0; right: 0; background: white; border: 2px solid #e5e7eb; border-radius: 10px; max-height: 250px; overflow-y: auto; z-index: 100; display: none; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+        .search-results.show { display: block; }
+        .search-item { padding: 12px 15px; cursor: pointer; border-bottom: 1px solid #f3f4f6; }
+        .search-item:hover { background: #f0fdf4; }
+        .search-item:last-child { border-bottom: none; }
+        
+        /* Badges */
+        .badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+        .badge-admin { background: #f3e8ff; color: #7c3aed; }
+        .badge-capturador { background: #dbeafe; color: #2563eb; }
+        .badge-machine { background: #e0f2fe; color: #0284c7; font-size: 11px; margin-left: 5px; }
+        
+        /* Buttons group */
+        .btn-group { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0; }
+        
+        /* Stats */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .stat-card { background: #1f2937; color: white; padding: 20px; border-radius: 12px; text-align: center; }
+        .stat-card .stat-label { color: #9ca3af; font-size: 12px; margin-bottom: 5px; }
+        .stat-card .stat-value { font-size: 24px; font-weight: bold; }
+        .stat-card.highlight .stat-value { color: #34d399; }
+        
+        /* Hidden */
+        .hidden { display: none !important; }
+        
+        /* File input */
+        .file-label { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; background: #3b82f6; color: white; border-radius: 10px; cursor: pointer; font-weight: bold; transition: all 0.3s; }
+        .file-label:hover { background: #2563eb; }
+        .file-input { display: none; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content { flex-direction: column; text-align: center; }
+            .header-user { text-align: center; }
+            .tab { min-width: 100px; font-size: 12px; padding: 10px; }
+            .content-box { padding: 20px; }
+        }
+
+        /* Toast notification */
+        .toast { position: fixed; top: 20px; right: 20px; padding: 15px 25px; border-radius: 10px; color: white; font-weight: 600; z-index: 9999; transform: translateX(400px); transition: transform 0.3s ease; }
+        .toast.show { transform: translateX(0); }
+        .toast.success { background: #10b981; }
+        .toast.error { background: #ef4444; }
+    </style>
+</head>
+<body>
+
+<div id="toast" class="toast"></div>
+
+<div id="login-screen" class="login-container">
+    <div class="login-box">
+        <h1 class="login-title">GESTIÓN DE INVENTARIOS</h1>
+        <p class="login-subtitle">✨ VIBRAS POSITIVAS ✨</p>
+        
+        <div id="login-alert"></div>
+        
+        <form id="login-form">
+            <div class="form-group">
+                <label>Usuario</label>
+                <input type="text" id="login-user" placeholder="Tu usuario" required>
+            </div>
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input type="password" id="login-pass" placeholder="Tu contraseña" required>
+            </div>
+            <div class="form-group">
+                <label>Nombre de Máquina</label>
+                <input type="text" id="login-machine" placeholder="Ej: PC-01, Tablet-Bodega" required>
+            </div>
+            <div class="form-group hidden" id="register-role-group">
+                <label>Rol</label>
+                <select id="register-role">
+                    <option value="capturador">Capturador</option>
+                    <option value="admin">Administrador</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary" id="login-btn">Ingresar</button>
+            <button type="button" class="link-btn" id="toggle-register" style="width:100%; text-align:center;">¿Primera vez? Registrarse</button>
+        </form>
+    </div>
+</div>
+
+<div id="app-screen" class="app-container">
+    <header class="header">
+        <div class="header-content">
+            <div>
+                <h1 class="header-title">GESTIÓN DE INVENTARIOS</h1>
+                <p class="header-subtitle">✨ VIBRAS POSITIVAS ✨</p>
+            </div>
+            <div class="header-time" id="clock">Cargando...</div>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div class="header-user">
+                    <strong id="display-user">Usuario</strong>
+                    <span id="display-machine">Máquina • Rol</span>
+                </div>
+                <button class="btn btn-logout" onclick="logout()">Salir</button>
+            </div>
+        </div>
+    </header>
+    
+    <div class="tabs-container">
+        <div class="tabs">
+            <button class="tab active" data-tab="captura">Capturar Conteo</button>
+            <button class="tab" data-tab="historial">Mi Historial</button>
+            <button class="tab admin-only" data-tab="maestro">Maestro Productos</button>
+            <button class="tab admin-only" data-tab="consolidado">Consolidado</button>
+            <button class="tab admin-only" data-tab="usuarios">Usuarios</button>
+        </div>
+    </div>
+    
+    <div class="content-container">
+        <div class="content-box">
+            
+            <div id="tab-captura" class="tab-content active">
+                <h2 class="content-title">Capturar Conteo de Inventario</h2>
+                
+                <div class="grid grid-4">
+                    <div class="form-group search-box" style="grid-column: span 2;">
+                        <label>Buscar Producto</label>
+                        <input type="text" id="search-product" placeholder="Escribe el nombre del producto..." oninput="searchProducts()">
+                        <div id="search-results" class="search-results"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Unidad</label>
+                        <input type="text" id="selected-unit" readonly style="background: #f9fafb;">
+                    </div>
+                    <div class="form-group">
+                        <label>Cantidad</label>
+                        <input type="number" id="input-cantidad" placeholder="0" min="0" step="0.01">
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" style="width: 100%; margin-bottom: 20px;" onclick="registrarConteo()">Registrar Producto</button>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Unidad</th>
+                                <th class="text-right">Cantidad</th>
+                                <th class="text-center">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-conteo"></tbody>
+                    </table>
+                </div>
+                
+                <div class="btn-group">
+                    <button class="btn btn-success" onclick="exportarConteoExcel()">📥 Exportar a Excel</button>
+                    <button class="btn btn-info" onclick="enviarConsolidado()">📤 Enviar al Consolidado</button>
+                    <button class="btn btn-danger" onclick="limpiarConteo()">🗑️ Borrar Conteo</button>
+                </div>
+            </div>
+            
+            <div id="tab-historial" class="tab-content">
+                <h2 class="content-title">Mi Historial de Conteos Enviados</h2>
+                <div id="historial-container"></div>
+            </div>
+            
+            <div id="tab-maestro" class="tab-content">
+                <h2 class="content-title" id="maestro-title">Maestro de Productos</h2>
+                
+                <div class="grid grid-4" style="margin-bottom: 20px; padding: 20px; background: #f9fafb; border-radius: 12px;">
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" id="prod-nombre" placeholder="Nombre del producto">
+                    </div>
+                    <div class="form-group">
+                        <label>Unidad</label>
+                        <input type="text" id="prod-unidad" placeholder="Paca, Libra, etc.">
+                    </div>
+                    <div class="form-group">
+                        <label>Costo</label>
+                        <input type="number" id="prod-costo" placeholder="0" min="0" step="0.01">
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: flex-end; gap: 10px;">
+                        <button class="btn btn-primary" id="btn-guardar-prod" onclick="guardarProducto()" style="flex: 1;">Guardar</button>
+                        <button class="btn btn-secondary hidden" id="btn-cancelar-edit" onclick="cancelarEdicion()">Cancelar</button>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    <p class="info-box-title">📦 Backup y Carga de Maestra</p>
+                    <p class="info-box-text">Importa tu archivo Excel con columnas: Nombre, Unidad, Costo</p>
+                    <div class="btn-group" style="margin-top: 15px; margin-bottom: 0;">
+                        <label class="file-label">
+                            📥 Importar Maestra desde Excel
+                            <input type="file" class="file-input" accept=".xlsx,.xls" onchange="importarMaestro(event)">
+                        </label>
+                        <button class="btn btn-success" onclick="exportarMaestro()">📤 Exportar Backup a Excel</button>
+                    </div>
+                </div>
+                
+                <div class="warning-box">
+                    <label style="font-weight: 600;">🔍 Buscar en Lista Maestra</label>
+                    <input type="text" id="search-maestro" placeholder="Escribe para filtrar..." oninput="renderMaestro()" style="margin-top: 10px;">
+                </div>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Unidad</th>
+                                <th class="text-right">Costo</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-maestro"></tbody>
+                    </table>
+                </div>
+                <p style="color: #6b7280; font-size: 14px; margin-top: 10px;">Total: <span id="total-productos">0</span> productos</p>
+            </div>
+            
+            <div id="tab-consolidado" class="tab-content">
+                <h2 class="content-title">Consolidado de Inventario</h2>
+                
+                <div class="btn-group">
+                    <div class="form-group" style="margin: 0;">
+                        <input type="text" id="filtro-fecha" placeholder="DD/MM/YYYY" style="width: 150px;">
+                    </div>
+                    <button class="btn btn-primary" onclick="cargarConsolidado()">Cargar Consolidado</button>
+                    <button class="btn btn-success" onclick="exportarConsolidado()">📥 Exportar a Excel</button>
+                    <button class="btn btn-danger" onclick="limpiarConsolidado()">🗑️ Limpiar Todo</button>
+                </div>
+                
+                <div id="consolidado-stats" class="stats-grid hidden">
+                    <div class="stat-card">
+                        <p class="stat-label">Total Items</p>
+                        <p class="stat-value" id="stat-items">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <p class="stat-label">Conteos Recibidos</p>
+                        <p class="stat-value" id="stat-conteos">0</p>
+                    </div>
+                    <div class="stat-card highlight" style="grid-column: span 2;">
+                        <p class="stat-label">Total Valorizado</p>
+                        <p class="stat-value" id="stat-total">$0</p>
+                    </div>
+                </div>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Unidad</th>
+                                <th class="text-right">Cantidad Total</th>
+                                <th class="text-right">Costo Unit.</th>
+                                <th class="text-right">Subtotal</th>
+                                <th>Detalle por Máquina</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-consolidado"></tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div id="tab-usuarios" class="tab-content">
+                <h2 class="content-title">Gestión de Usuarios</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Usuario</th>
+                                <th>Máquina</th>
+                                <th>Rol</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-usuarios"></tbody>
+                    </table>
+                </div>
+                <p style="color: #6b7280; font-size: 14px; margin-top: 10px;">Máximo: 1 administrador + 3 capturadores</p>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<script>
+// ==================== STORAGE ====================
+const KEYS = {
+    USERS: 'inv_users',
+    PRODUCTOS: 'inv_productos',
+    CONTEOS: 'inv_conteos',
+    CURRENT_USER: 'inv_current_user',
+    LOCAL_CONTEO: 'inv_local_conteo'
+};
+
+function getStorage(key) {
+    return JSON.parse(localStorage.getItem(key) || '[]');
+}
+
+function setStorage(key, data) {
+    localStorage.setItem(key, JSON.stringify(data));
+}
+
+function getCurrentUser() {
+    const user = localStorage.getItem(KEYS.CURRENT_USER);
+    return user ? JSON.parse(user) : null;
+}
+
+function setCurrentUser(user) {
+    localStorage.setItem(KEYS.CURRENT_USER, JSON.stringify(user));
+}
+
+// ==================== TOAST ====================
+function showToast(message, type = 'success') {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = `toast ${type} show`;
+    setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// ==================== CLOCK ====================
+function updateClock() {
+    const options = { timeZone: 'America/Bogota', hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' };
+    document.getElementById('clock').textContent = 'Colombia: ' + new Date().toLocaleString('es-CO', options);
+}
+setInterval(updateClock, 1000);
+
+function getColombiaDate() {
+    return new Date().toLocaleDateString('es-CO', { timeZone: 'America/Bogota', day: '2-digit', month: '2-digit', year: 'numeric' });
+}
+
+function getColombiaTime() {
+    return new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota', hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' });
+}
+
+// ==================== AUTH ====================
+let isRegistering = false;
+let currentUser = null;
+let selectedProduct = null;
+let editingProductId = null;
+
+document.getElementById('toggle-register').onclick = function() {
+    isRegistering = !isRegistering;
+    document.getElementById('register-role-group').classList.toggle('hidden', !isRegistering);
+    document.getElementById('login-btn').textContent = isRegistering ? 'Registrarse' : 'Ingresar';
+    this.textContent = isRegistering ? '¿Ya tienes cuenta? Inicia sesión' : '¿Primera vez? Registrarse';
+    document.getElementById('login-alert').innerHTML = '';
+};
+
+document.getElementById('login-form').onsubmit = function(e) {
+    e.preventDefault();
+    const username = document.getElementById('login-user').value.trim();
+    const password = document.getElementById('login-pass').value;
+    const machine = document.getElementById('login-machine').value.trim();
+    const role = document.getElementById('register-role').value;
+    
+    const users = getStorage(KEYS.USERS);
+    
+    if (isRegistering) {
+        if (users.find(u => u.username === username)) {
+            showAlert('Usuario ya existe', 'error');
+            return;
+        }
+        if (role === 'admin' && users.filter(u => u.role === 'admin').length >= 1) {
+            showAlert('Ya existe un administrador', 'error');
+            return;
+        }
+        if (role === 'capturador' && users.filter(u => u.role === 'capturador').length >= 3) {
+            showAlert('Máximo 3 capturadores permitidos', 'error');
+            return;
+        }
+        users.push({ id: Date.now().toString(), username, password, machine_name: machine, role });
+        setStorage(KEYS.USERS, users);
+        showAlert('Usuario creado. Ahora inicia sesión.', 'success');
+        document.getElementById('toggle-register').click();
+    } else {
+        const user = users.find(u => u.username === username && u.password === password);
+        if (!user) {
+            showAlert('Credenciales inválidas', 'error');
+            return;
+        }
+        user.machine_name = machine;
+        setStorage(KEYS.USERS, users);
+        setCurrentUser(user);
+        currentUser = user;
+        showApp();
+    }
+};
+
+function showAlert(message, type) {
+    document.getElementById('login-alert').innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+}
+
+function logout() {
+    localStorage.removeItem(KEYS.CURRENT_USER);
+    currentUser = null;
+    document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('app-screen').style.display = 'none';
+    document.getElementById('login-form').reset();
+}
+
+function showApp() {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app-screen').style.display = 'block';
+    document.getElementById('display-user').textContent = currentUser.username;
+    document.getElementById('display-machine').textContent = `${currentUser.machine_name} • ${currentUser.role}`;
+    document.querySelectorAll('.admin-only').forEach(el => {
+        el.classList.toggle('hidden', currentUser.role !== 'admin');
+    });
+    updateClock();
+    loadLocalConteo();
+    renderConteoTable();
+}
+
+// ==================== TABS ====================
+document.querySelectorAll('.tab').forEach(tab => {
+    tab.onclick = function() {
+        if (this.classList.contains('hidden')) return;
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('tab-' + this.dataset.tab).classList.add('active');
+        if (this.dataset.tab === 'maestro') renderMaestro();
+        if (this.dataset.tab === 'usuarios') renderUsuarios();
+        if (this.dataset.tab === 'historial') renderHistorial();
+        if (this.dataset.tab === 'consolidado') cargarConsolidado();
+    };
+});
+
+// ==================== PRODUCTOS (MAESTRO) ====================
+function renderMaestro() {
+    const productos = getStorage(KEYS.PRODUCTOS);
+    const search = document.getElementById('search-maestro').value.toLowerCase();
+    const filtered = productos.filter(p => p.nombre.toLowerCase().includes(search));
+    document.getElementById('tabla-maestro').innerHTML = filtered.map(p => `
+        <tr>
+            <td>${p.nombre}</td>
+            <td>${p.unidad}</td>
+            <td class="text-right">$${p.costo.toLocaleString()}</td>
+            <td class="text-center">
+                <button class="btn btn-warning" style="padding: 6px 12px; font-size: 13px;" onclick="editarProducto('${p.id}')">Editar</button>
+                <button class="btn btn-danger" style="padding: 6px 12px; font-size: 13px;" onclick="eliminarProducto('${p.id}')">Eliminar</button>
+            </td>
+        </tr>
+    `).join('') || '<tr><td colspan="4" style="text-align:center; color:#6b7280; padding: 40px;">No hay productos</td></tr>';
+    document.getElementById('total-productos').textContent = filtered.length;
+}
+
+function guardarProducto() {
+    const nombre = document.getElementById('prod-nombre').value.trim();
+    const unidad = document.getElementById('prod-unidad').value.trim();
+    const costo = parseFloat(document.getElementById('prod-costo').value) || 0;
+    if (!nombre || !unidad) {
+        showToast('Nombre y unidad son requeridos', 'error');
+        return;
+    }
+    const productos = getStorage(KEYS.PRODUCTOS);
+    if (editingProductId) {
+        const idx = productos.findIndex(p => p.id === editingProductId);
+        if (idx !== -1) productos[idx] = { ...productos[idx], nombre, unidad, costo };
+        cancelarEdicion();
+        showToast('Producto actualizado');
+    } else {
+        productos.push({ id: Date.now().toString(), nombre, unidad, costo });
+        showToast('Producto guardado');
+    }
+    setStorage(KEYS.PRODUCTOS, productos);
+    document.getElementById('prod-nombre').value = '';
+    document.getElementById('prod-unidad').value = '';
+    document.getElementById('prod-costo').value = '';
+    renderMaestro();
+}
+
+function editarProducto(id) {
+    const productos = getStorage(KEYS.PRODUCTOS);
+    const p = productos.find(x => x.id === id);
+    if (!p) return;
+    editingProductId = id;
+    document.getElementById('prod-nombre').value = p.nombre;
+    document.getElementById('prod-unidad').value = p.unidad;
+    document.getElementById('prod-costo').value = p.costo;
+    document.getElementById('maestro-title').textContent = '✏️ Editando: ' + p.nombre;
+    document.getElementById('btn-guardar-prod').textContent = 'Actualizar';
+    document.getElementById('btn-cancelar-edit').classList.remove('hidden');
+}
+
+function cancelarEdicion() {
+    editingProductId = null;
+    document.getElementById('prod-nombre').value = '';
+    document.getElementById('prod-unidad').value = '';
+    document.getElementById('prod-costo').value = '';
+    document.getElementById('maestro-title').textContent = 'Maestro de Productos';
+    document.getElementById('btn-guardar-prod').textContent = 'Guardar';
+    document.getElementById('btn-cancelar-edit').classList.add('hidden');
+}
+
+function eliminarProducto(id) {
+    if (!confirm('¿Eliminar este producto?')) return;
+    let productos = getStorage(KEYS.PRODUCTOS);
+    productos = productos.filter(p => p.id !== id);
+    setStorage(KEYS.PRODUCTOS, productos);
+    showToast('Producto eliminado');
+    renderMaestro();
+}
+
+function exportarMaestro() {
+    const productos = getStorage(KEYS.PRODUCTOS);
+    const data = productos.map(p => ({ Nombre: p.nombre, Unidad: p.unidad, Costo: p.costo }));
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Productos');
+    XLSX.writeFile(wb, `Backup_Productos_${getColombiaDate().replace(/\//g, '-')}.xlsx`);
+    showToast('Backup exportado');
+}
+
+function importarMaestro(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+        const data = new Uint8Array(ev.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+        const jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
+        const productos = jsonData.map(row => ({
+            id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+            nombre: (row.Nombre || row.nombre || '').toString(),
+            unidad: (row.Unidad || row.unidad || '').toString(),
+            costo: parseFloat(row.Costo || row.costo || 0)
+        }));
+        setStorage(KEYS.PRODUCTOS, productos);
+        showToast(`${productos.length} productos importados`);
+        renderMaestro();
+    };
+    reader.readAsArrayBuffer(file);
+    e.target.value = '';
+}
+
+// ==================== CAPTURA CONTEO ====================
+let localConteo = [];
+function loadLocalConteo() { localConteo = JSON.parse(localStorage.getItem(KEYS.LOCAL_CONTEO) || '[]'); }
+function saveLocalConteo() { localStorage.setItem(KEYS.LOCAL_CONTEO, JSON.stringify(localConteo)); }
+
+function searchProducts() {
+    const query = document.getElementById('search-product').value.toLowerCase();
+    const results = document.getElementById('search-results');
+    if (!query) { results.classList.remove('show'); return; }
+    const productos = getStorage(KEYS.PRODUCTOS);
+    const filtered = productos.filter(p => p.nombre.toLowerCase().includes(query)).slice(0, 10);
+    if (filtered.length === 0) { results.classList.remove('show'); return; }
+    results.innerHTML = filtered.map(p => `
+        <div class="search-item" onclick="selectProductForCount('${p.id}')">
+            <strong>${p.nombre}</strong> <span style="color:#6b7280;">(${p.unidad})</span>
+        </div>
+    `).join('');
+    results.classList.add('show');
+}
+
+function selectProductForCount(id) {
+    const productos = getStorage(KEYS.PRODUCTOS);
+    selectedProduct = productos.find(p => p.id === id);
+    if (selectedProduct) {
+        document.getElementById('search-product').value = selectedProduct.nombre;
+        document.getElementById('selected-unit').value = selectedProduct.unidad;
+        document.getElementById('search-results').classList.remove('show');
+        document.getElementById('input-cantidad').focus();
+    }
+}
+
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.search-box')) document.getElementById('search-results').classList.remove('show');
+});
+
+function registrarConteo() {
+    const cantidad = parseFloat(document.getElementById('input-cantidad').value);
+    if (!selectedProduct) { showToast('Selecciona un producto', 'error'); return; }
+    if (!cantidad || cantidad <= 0) { showToast('Ingresa una cantidad válida', 'error'); return; }
+    localConteo.push({
+        producto_id: selectedProduct.id,
+        nombre: selectedProduct.nombre,
+        unidad: selectedProduct.unidad,
+        cantidad: cantidad,
+        fecha: getColombiaTime()
+    });
+    saveLocalConteo();
+    renderConteoTable();
+    selectedProduct = null;
+    document.getElementById('search-product').value = '';
+    document.getElementById('selected-unit').value = '';
+    document.getElementById('input-cantidad').value = '';
+    showToast('Producto registrado');
+}
+
+function renderConteoTable() {
+    document.getElementById('tabla-conteo').innerHTML = localConteo.map((item, idx) => `
+        <tr>
+            <td>${item.nombre}</td>
+            <td>${item.unidad}</td>
+            <td class="text-right" style="font-weight: 600;">${item.cantidad}</td>
+            <td class="text-center">
+                <button class="btn btn-danger" style="padding: 6px 12px; font-size: 13px;" onclick="eliminarConteoItem(${idx})">Eliminar</button>
+            </td>
+        </tr>
+    `).join('') || '<tr><td colspan="4" style="text-align:center; color:#6b7280; padding: 40px;">No hay productos en el conteo actual</td></tr>';
+}
+
+function eliminarConteoItem(idx) {
+    localConteo.splice(idx, 1);
+    saveLocalConteo();
+    renderConteoTable();
+}
+
+function exportarConteoExcel() {
+    if (localConteo.length === 0) { showToast('No hay datos para exportar', 'error'); return; }
+    const data = localConteo.map(item => ({ Producto: item.nombre, Unidad: item.unidad, Cantidad: item.cantidad, Fecha: item.fecha }));
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Conteo');
+    XLSX.writeFile(wb, `Conteo_${currentUser.machine_name}_${getColombiaDate().replace(/\//g, '-')}.xlsx`);
+    showToast('Conteo exportado a Excel');
+}
+
+function enviarConsolidado() {
+    if (localConteo.length === 0) { showToast('No hay items para enviar', 'error'); return; }
+    const conteos = getStorage(KEYS.CONTEOS);
+    conteos.push({
+        id: Date.now().toString(),
+        user_id: currentUser.id,
+        username: currentUser.username,
+        machine_name: currentUser.machine_name,
+        items: [...localConteo],
+        fecha_conteo: getColombiaDate(),
+        fecha_envio: getColombiaTime()
+    });
+    setStorage(KEYS.CONTEOS, conteos);
+    localConteo = [];
+    saveLocalConteo();
+    renderConteoTable();
+    showToast('Conteo enviado al consolidado');
+}
+
+function limpiarConteo() {
+    if (!confirm('¿Borrar el conteo actual?')) return;
+    localConteo = [];
+    saveLocalConteo();
+    renderConteoTable();
+}
+
+// ==================== HISTORIAL ====================
+function renderHistorial() {
+    const conteos = getStorage(KEYS.CONTEOS).filter(c => c.user_id === currentUser.id);
+    if (conteos.length === 0) {
+        document.getElementById('historial-container').innerHTML = '<p style="text-align:center; color:#6b7280; padding: 40px;">No has enviado conteos aún</p>';
+        return;
+    }
+    document.getElementById('historial-container').innerHTML = conteos.reverse().map(conteo => `
+        <div style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px; margin-bottom: 15px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <strong>Fecha: ${conteo.fecha_conteo}</strong>
+                <span style="color: #6b7280;">${conteo.items.length} productos</span>
+            </div>
+            <table style="width: 100%; font-size: 14px;">
+                <thead><tr style="background: #f9fafb;"><th style="padding: 8px;">Producto</th><th style="padding: 8px;">Unidad</th><th style="padding: 8px; text-align: right;">Cantidad</th></tr></thead>
+                <tbody>
+                    ${conteo.items.map(item => `<tr><td style="padding: 8px; border-top: 1px solid #e5e7eb;">${item.nombre}</td><td style="padding: 8px; border-top: 1px solid #e5e7eb;">${item.unidad}</td><td style="padding: 8px; border-top: 1px solid #e5e7eb; text-align: right;">${item.cantidad}</td></tr>`).join('')}
+                </tbody>
+            </table>
+        </div>
+    `).join('');
+}
+
+// ==================== CONSOLIDADO ====================
+function cargarConsolidado() {
+    const filtro = document.getElementById('filtro-fecha').value;
+    let conteos = getStorage(KEYS.CONTEOS);
+    const productos = getStorage(KEYS.PRODUCTOS);
+    if (filtro) conteos = conteos.filter(c => c.fecha_conteo.includes(filtro));
+    const productoMap = {};
+    productos.forEach(p => productoMap[p.id] = p);
+    const consolidado = {};
+    conteos.forEach(conteo => {
+        conteo.items.forEach(item => {
+            if (!consolidado[item.producto_id]) {
+                const prod = productoMap[item.producto_id] || {};
+                consolidado[item.producto_id] = { nombre: item.nombre, unidad: item.unidad, cantidad_total: 0, costo: prod.costo || 0, conteos_por_maquina: [] };
+            }
+            consolidado[item.producto_id].cantidad_total += item.cantidad;
+            consolidado[item.producto_id].conteos_por_maquina.push({ machine: conteo.machine_name, cantidad: item.cantidad });
+        });
+    });
+    const items = Object.values(consolidado);
+    let total = 0;
+    document.getElementById('tabla-consolidado').innerHTML = items.map(item => {
+        const subtotal = item.cantidad_total * item.costo;
+        total += subtotal;
+        return `<tr>
+            <td style="font-weight: 600;">${item.nombre}</td>
+            <td>${item.unidad}</td>
+            <td class="text-right" style="font-weight: bold; color: #10b981;">${item.cantidad_total}</td>
+            <td class="text-right">$${item.costo.toLocaleString()}</td>
+            <td class="text-right" style="font-weight: 600;">$${subtotal.toLocaleString()}</td>
+            <td>${item.conteos_por_maquina.map(c => `<span class="badge badge-machine">${c.machine}: ${c.cantidad}</span>`).join(' ')}</td>
+        </tr>`;
+    }).join('') || '<tr><td colspan="6" style="text-align:center; color:#6b7280; padding: 40px;">No hay datos</td></tr>';
+    document.getElementById('consolidado-stats').classList.toggle('hidden', items.length === 0);
+    document.getElementById('stat-items').textContent = items.length;
+    document.getElementById('stat-conteos').textContent = conteos.length;
+    document.getElementById('stat-total').textContent = '$' + total.toLocaleString();
+    window.consolidadoData = { items, total, conteos };
+}
+
+function exportarConsolidado() {
+    if (!window.consolidadoData || window.consolidadoData.items.length === 0) { showToast('No hay datos', 'error'); return; }
+    const data = window.consolidadoData.items.map(item => ({ Producto: item.nombre, Unidad: item.unidad, 'Cantidad Total': item.cantidad_total, 'Costo Unitario': item.costo, Subtotal: item.cantidad_total * item.costo }));
+    data.push({ Producto: '', Unidad: '', 'Cantidad Total': '', 'Costo Unitario': 'TOTAL:', Subtotal: window.consolidadoData.total });
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Consolidado');
+    XLSX.writeFile(wb, `Consolidado_${getColombiaDate().replace(/\//g, '-')}.xlsx`);
+}
+
+function limpiarConsolidado() {
+    if (!confirm('¿Eliminar TODO?')) return;
+    setStorage(KEYS.CONTEOS, []);
+    cargarConsolidado();
+}
+
+// ==================== USUARIOS ====================
+function renderUsuarios() {
+    const users = getStorage(KEYS.USERS);
+    document.getElementById('tabla-usuarios').innerHTML = users.map(u => `
+        <tr>
+            <td style="font-weight: 600;">${u.username}</td>
+            <td>${u.machine_name}</td>
+            <td><span class="badge badge-${u.role}">${u.role}</span></td>
+            <td class="text-center">
+                ${u.role !== 'admin' ? `<button class="btn btn-danger" style="padding: 6px 12px; font-size: 13px;" onclick="eliminarUsuario('${u.id}')">Eliminar</button>` : ''}
+            </td>
+        </tr>
+    `).join('');
+}
+
+function eliminarUsuario(id) {
+    if (!confirm('¿Eliminar usuario?')) return;
+    let users = getStorage(KEYS.USERS);
+    users = users.filter(u => u.id !== id);
+    setStorage(KEYS.USERS, users);
+    renderUsuarios();
+}
+
+// ==================== INIT ====================
+document.addEventListener('DOMContentLoaded', function() {
+    currentUser = getCurrentUser();
+    if (currentUser) showApp();
+});
+</script>
+</body>
+</html>

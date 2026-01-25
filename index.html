@@ -9,13 +9,11 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #065f46 0%, #0d9488 100%); min-height: 100vh; }
         
-        /* Login */
         .login-container { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .login-box { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 25px 50px rgba(0,0,0,0.25); width: 100%; max-width: 420px; border-top: 5px solid #10b981; }
         .login-title { text-align: center; font-size: 24px; font-weight: bold; color: #1f2937; margin-bottom: 5px; }
         .login-subtitle { text-align: center; color: #10b981; font-size: 12px; letter-spacing: 3px; margin-bottom: 30px; }
         
-        /* Forms */
         .form-group { margin-bottom: 20px; }
         .form-group label { display: block; font-weight: 600; color: #374151; margin-bottom: 6px; font-size: 14px; }
         .form-group input, .form-group select { width: 100%; padding: 14px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 15px; transition: all 0.3s; }
@@ -34,6 +32,8 @@
         .btn-info:hover { background: #2563eb; }
         .btn-success { background: #16a34a; color: white; }
         .btn-success:hover { background: #15803d; }
+        .btn-purple { background: #7c3aed; color: white; }
+        .btn-purple:hover { background: #6d28d9; }
         
         .link-btn { background: none; border: none; color: #10b981; cursor: pointer; font-size: 14px; margin-top: 15px; }
         .link-btn:hover { text-decoration: underline; }
@@ -42,10 +42,8 @@
         .alert-error { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
         .alert-success { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
         
-        /* App Container */
         .app-container { display: none; min-height: 100vh; background: #f3f4f6; }
         
-        /* Header */
         .header { background: linear-gradient(135deg, #065f46 0%, #0d9488 100%); color: white; padding: 15px 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         .header-content { max-width: 1400px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 15px; }
         .header-title { font-size: 20px; font-weight: bold; }
@@ -56,14 +54,12 @@
         .header-user span { color: #a7f3d0; }
         .btn-logout { background: #ef4444; color: white; padding: 8px 16px; font-size: 13px; }
         
-        /* Tabs */
         .tabs-container { max-width: 1400px; margin: 20px auto; padding: 0 20px; }
         .tabs { display: flex; flex-wrap: wrap; gap: 5px; background: #e5e7eb; padding: 5px; border-radius: 15px; }
-        .tab { flex: 1; min-width: 120px; padding: 12px 15px; border: none; background: transparent; font-weight: 600; cursor: pointer; border-radius: 10px; transition: all 0.3s; font-size: 14px; color: #4b5563; }
+        .tab { flex: 1; min-width: 100px; padding: 12px 10px; border: none; background: transparent; font-weight: 600; cursor: pointer; border-radius: 10px; transition: all 0.3s; font-size: 13px; color: #4b5563; }
         .tab:hover { background: #d1d5db; }
         .tab.active { background: #10b981; color: white; box-shadow: 0 4px 10px rgba(16,185,129,0.3); }
         
-        /* Content */
         .content-container { max-width: 1400px; margin: 0 auto 30px; padding: 0 20px; }
         .content-box { background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border-top: 5px solid #10b981; }
         .content-title { font-size: 20px; font-weight: bold; color: #1f2937; margin-bottom: 25px; }
@@ -71,13 +67,9 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
         
-        /* Grid */
         .grid { display: grid; gap: 15px; }
-        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
-        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
         .grid-4 { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
         
-        /* Tables */
         .table-container { overflow-x: auto; margin: 20px 0; max-height: 400px; overflow-y: auto; }
         table { width: 100%; border-collapse: collapse; }
         th { background: #f3f4f6; padding: 12px 15px; text-align: left; font-weight: 600; color: #374151; position: sticky; top: 0; }
@@ -86,18 +78,16 @@
         .text-right { text-align: right; }
         .text-center { text-align: center; }
         
-        /* Boxes */
         .info-box { background: #f0fdf4; border: 2px solid #86efac; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
         .info-box-title { font-weight: 600; color: #166534; margin-bottom: 5px; }
         .info-box-text { color: #15803d; font-size: 14px; }
         
         .warning-box { background: #fefce8; border: 2px solid #fde047; border-radius: 12px; padding: 15px; margin-bottom: 20px; }
         
-        .total-box { background: #1f2937; color: white; padding: 25px; border-radius: 15px; margin-top: 20px; border-left: 5px solid #10b981; }
-        .total-box .label { color: #9ca3af; font-size: 14px; }
-        .total-box .value { font-size: 32px; font-weight: bold; color: #34d399; }
+        .backup-box { background: #faf5ff; border: 2px solid #c084fc; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+        .backup-box-title { font-weight: 600; color: #7c3aed; margin-bottom: 5px; font-size: 16px; }
+        .backup-box-text { color: #6b21a8; font-size: 14px; }
         
-        /* Search */
         .search-box { position: relative; }
         .search-results { position: absolute; top: 100%; left: 0; right: 0; background: white; border: 2px solid #e5e7eb; border-radius: 10px; max-height: 250px; overflow-y: auto; z-index: 100; display: none; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
         .search-results.show { display: block; }
@@ -105,39 +95,34 @@
         .search-item:hover { background: #f0fdf4; }
         .search-item:last-child { border-bottom: none; }
         
-        /* Badges */
         .badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
         .badge-admin { background: #f3e8ff; color: #7c3aed; }
         .badge-capturador { background: #dbeafe; color: #2563eb; }
         .badge-machine { background: #e0f2fe; color: #0284c7; font-size: 11px; margin-left: 5px; }
         
-        /* Buttons group */
         .btn-group { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0; }
         
-        /* Stats */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 20px; }
         .stat-card { background: #1f2937; color: white; padding: 20px; border-radius: 12px; text-align: center; }
         .stat-card .stat-label { color: #9ca3af; font-size: 12px; margin-bottom: 5px; }
         .stat-card .stat-value { font-size: 24px; font-weight: bold; }
         .stat-card.highlight .stat-value { color: #34d399; }
         
-        /* Hidden */
         .hidden { display: none !important; }
         
-        /* File input */
         .file-label { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; background: #3b82f6; color: white; border-radius: 10px; cursor: pointer; font-weight: bold; transition: all 0.3s; }
         .file-label:hover { background: #2563eb; }
+        .file-label.purple { background: #7c3aed; }
+        .file-label.purple:hover { background: #6d28d9; }
         .file-input { display: none; }
         
-        /* Responsive */
         @media (max-width: 768px) {
             .header-content { flex-direction: column; text-align: center; }
             .header-user { text-align: center; }
-            .tab { min-width: 100px; font-size: 12px; padding: 10px; }
+            .tab { min-width: 80px; font-size: 11px; padding: 10px 5px; }
             .content-box { padding: 20px; }
         }
 
-        /* Toast notification */
         .toast { position: fixed; top: 20px; right: 20px; padding: 15px 25px; border-radius: 10px; color: white; font-weight: 600; z-index: 9999; transform: translateX(400px); transition: transform 0.3s ease; }
         .toast.show { transform: translateX(0); }
         .toast.success { background: #10b981; }
@@ -178,6 +163,14 @@
             <button type="submit" class="btn btn-primary" id="login-btn">Ingresar</button>
             <button type="button" class="link-btn" id="toggle-register" style="width:100%; text-align:center;">¿Primera vez? Registrarse</button>
         </form>
+        
+        <div style="margin-top: 25px; padding-top: 20px; border-top: 2px solid #e5e7eb;">
+            <p style="text-align: center; color: #6b7280; font-size: 13px; margin-bottom: 10px;">¿Tienes un respaldo anterior?</p>
+            <label class="file-label purple" style="width: 100%; justify-content: center;">
+                🔄 Restaurar Respaldo Completo
+                <input type="file" class="file-input" accept=".json" onchange="restaurarRespaldoLogin(event)">
+            </label>
+        </div>
     </div>
 </div>
 
@@ -201,11 +194,12 @@
     
     <div class="tabs-container">
         <div class="tabs">
-            <button class="tab active" data-tab="captura">Capturar Conteo</button>
-            <button class="tab" data-tab="historial">Mi Historial</button>
-            <button class="tab admin-only" data-tab="maestro">Maestro Productos</button>
+            <button class="tab active" data-tab="captura">Capturar</button>
+            <button class="tab" data-tab="historial">Historial</button>
+            <button class="tab admin-only" data-tab="maestro">Productos</button>
             <button class="tab admin-only" data-tab="consolidado">Consolidado</button>
             <button class="tab admin-only" data-tab="usuarios">Usuarios</button>
+            <button class="tab" data-tab="respaldo" style="background: #7c3aed; color: white;">💾 Respaldo</button>
         </div>
     </div>
     
@@ -235,22 +229,15 @@
                 
                 <div class="table-container">
                     <table>
-                        <thead>
-                            <tr>
-                                <th>Producto</th>
-                                <th>Unidad</th>
-                                <th class="text-right">Cantidad</th>
-                                <th class="text-center">Acción</th>
-                            </tr>
-                        </thead>
+                        <thead><tr><th>Producto</th><th>Unidad</th><th class="text-right">Cantidad</th><th class="text-center">Acción</th></tr></thead>
                         <tbody id="tabla-conteo"></tbody>
                     </table>
                 </div>
                 
                 <div class="btn-group">
-                    <button class="btn btn-success" onclick="exportarConteoExcel()">📥 Exportar a Excel</button>
-                    <button class="btn btn-info" onclick="enviarConsolidado()">📤 Enviar al Consolidado</button>
-                    <button class="btn btn-danger" onclick="limpiarConteo()">🗑️ Borrar Conteo</button>
+                    <button class="btn btn-success" onclick="exportarConteoExcel()">📥 Exportar Excel</button>
+                    <button class="btn btn-info" onclick="enviarConsolidado()">📤 Enviar Consolidado</button>
+                    <button class="btn btn-danger" onclick="limpiarConteo()">🗑️ Borrar</button>
                 </div>
             </div>
             
@@ -277,7 +264,7 @@
                     </div>
                     <div class="form-group" style="display: flex; align-items: flex-end; gap: 10px;">
                         <button class="btn btn-primary" id="btn-guardar-prod" onclick="guardarProducto()" style="flex: 1;">Guardar</button>
-                        <button class="btn btn-secondary hidden" id="btn-cancelar-edit" onclick="cancelarEdicion()">Cancelar</button>
+                        <button class="btn btn-secondary hidden" id="btn-cancelar-edit" onclick="cancelarEdicion()">X</button>
                     </div>
                 </div>
                 
@@ -286,10 +273,10 @@
                     <p class="info-box-text">Importa tu archivo Excel con columnas: Nombre, Unidad, Costo</p>
                     <div class="btn-group" style="margin-top: 15px; margin-bottom: 0;">
                         <label class="file-label">
-                            📥 Importar Maestra desde Excel
+                            📥 Importar Excel
                             <input type="file" class="file-input" accept=".xlsx,.xls" onchange="importarMaestro(event)">
                         </label>
-                        <button class="btn btn-success" onclick="exportarMaestro()">📤 Exportar Backup a Excel</button>
+                        <button class="btn btn-success" onclick="exportarMaestro()">📤 Exportar Excel</button>
                     </div>
                 </div>
                 
@@ -300,14 +287,7 @@
                 
                 <div class="table-container">
                     <table>
-                        <thead>
-                            <tr>
-                                <th>Producto</th>
-                                <th>Unidad</th>
-                                <th class="text-right">Costo</th>
-                                <th class="text-center">Acciones</th>
-                            </tr>
-                        </thead>
+                        <thead><tr><th>Producto</th><th>Unidad</th><th class="text-right">Costo</th><th class="text-center">Acciones</th></tr></thead>
                         <tbody id="tabla-maestro"></tbody>
                     </table>
                 </div>
@@ -321,38 +301,20 @@
                     <div class="form-group" style="margin: 0;">
                         <input type="text" id="filtro-fecha" placeholder="DD/MM/YYYY" style="width: 150px;">
                     </div>
-                    <button class="btn btn-primary" onclick="cargarConsolidado()">Cargar Consolidado</button>
-                    <button class="btn btn-success" onclick="exportarConsolidado()">📥 Exportar a Excel</button>
-                    <button class="btn btn-danger" onclick="limpiarConsolidado()">🗑️ Limpiar Todo</button>
+                    <button class="btn btn-primary" onclick="cargarConsolidado()">Cargar</button>
+                    <button class="btn btn-success" onclick="exportarConsolidado()">📥 Excel</button>
+                    <button class="btn btn-danger" onclick="limpiarConsolidado()">🗑️ Limpiar</button>
                 </div>
                 
                 <div id="consolidado-stats" class="stats-grid hidden">
-                    <div class="stat-card">
-                        <p class="stat-label">Total Items</p>
-                        <p class="stat-value" id="stat-items">0</p>
-                    </div>
-                    <div class="stat-card">
-                        <p class="stat-label">Conteos Recibidos</p>
-                        <p class="stat-value" id="stat-conteos">0</p>
-                    </div>
-                    <div class="stat-card highlight" style="grid-column: span 2;">
-                        <p class="stat-label">Total Valorizado</p>
-                        <p class="stat-value" id="stat-total">$0</p>
-                    </div>
+                    <div class="stat-card"><p class="stat-label">Total Items</p><p class="stat-value" id="stat-items">0</p></div>
+                    <div class="stat-card"><p class="stat-label">Conteos</p><p class="stat-value" id="stat-conteos">0</p></div>
+                    <div class="stat-card highlight" style="grid-column: span 2;"><p class="stat-label">Total Valorizado</p><p class="stat-value" id="stat-total">$0</p></div>
                 </div>
                 
                 <div class="table-container">
                     <table>
-                        <thead>
-                            <tr>
-                                <th>Producto</th>
-                                <th>Unidad</th>
-                                <th class="text-right">Cantidad Total</th>
-                                <th class="text-right">Costo Unit.</th>
-                                <th class="text-right">Subtotal</th>
-                                <th>Detalle por Máquina</th>
-                            </tr>
-                        </thead>
+                        <thead><tr><th>Producto</th><th>Unidad</th><th class="text-right">Cant. Total</th><th class="text-right">Costo</th><th class="text-right">Subtotal</th><th>Por Máquina</th></tr></thead>
                         <tbody id="tabla-consolidado"></tbody>
                     </table>
                 </div>
@@ -362,18 +324,59 @@
                 <h2 class="content-title">Gestión de Usuarios</h2>
                 <div class="table-container">
                     <table>
-                        <thead>
-                            <tr>
-                                <th>Usuario</th>
-                                <th>Máquina</th>
-                                <th>Rol</th>
-                                <th class="text-center">Acciones</th>
-                            </tr>
-                        </thead>
+                        <thead><tr><th>Usuario</th><th>Máquina</th><th>Rol</th><th class="text-center">Acciones</th></tr></thead>
                         <tbody id="tabla-usuarios"></tbody>
                     </table>
                 </div>
                 <p style="color: #6b7280; font-size: 14px; margin-top: 10px;">Máximo: 1 administrador + 3 capturadores</p>
+            </div>
+            
+            <div id="tab-respaldo" class="tab-content">
+                <h2 class="content-title">💾 Sistema de Respaldo Completo</h2>
+                
+                <div class="backup-box">
+                    <p class="backup-box-title">⚠️ ¡IMPORTANTE! - Lee esto</p>
+                    <p class="backup-box-text">
+                        Los datos se guardan en el navegador (localStorage). Si borras el historial del navegador, <strong>PERDERÁS TODOS LOS DATOS</strong>.<br><br>
+                        <strong>Solución:</strong> Descarga el respaldo completo al final de cada día de trabajo. Si pierdes los datos, puedes restaurarlos desde el archivo.
+                    </p>
+                </div>
+                
+                <div class="info-box" style="background: #eff6ff; border-color: #93c5fd;">
+                    <p class="info-box-title" style="color: #1d4ed8;">📥 DESCARGAR RESPALDO COMPLETO</p>
+                    <p class="info-box-text" style="color: #1e40af;">Guarda TODOS los datos: usuarios, productos, conteos locales y consolidado.</p>
+                    <button class="btn btn-info" style="margin-top: 15px;" onclick="descargarRespaldoCompleto()">
+                        💾 Descargar Respaldo Ahora
+                    </button>
+                    <p style="color: #6b7280; font-size: 12px; margin-top: 10px;">
+                        Último respaldo: <span id="ultimo-respaldo">Nunca</span>
+                    </p>
+                </div>
+                
+                <div class="info-box" style="background: #faf5ff; border-color: #c084fc;">
+                    <p class="info-box-title" style="color: #7c3aed;">🔄 RESTAURAR RESPALDO</p>
+                    <p class="info-box-text" style="color: #6b21a8;">Si perdiste los datos, carga tu archivo de respaldo aquí.</p>
+                    <label class="file-label purple" style="margin-top: 15px;">
+                        📂 Seleccionar Archivo de Respaldo
+                        <input type="file" class="file-input" accept=".json" onchange="restaurarRespaldo(event)">
+                    </label>
+                </div>
+                
+                <div class="warning-box" style="background: #fef2f2; border-color: #fca5a5;">
+                    <p style="font-weight: 600; color: #dc2626;">🔴 ZONA DE PELIGRO</p>
+                    <p style="color: #b91c1c; font-size: 14px; margin: 10px 0;">Esto borrará TODOS los datos de la aplicación. Asegúrate de tener un respaldo antes.</p>
+                    <button class="btn btn-danger" onclick="borrarTodosDatos()">🗑️ Borrar TODOS los Datos</button>
+                </div>
+                
+                <div style="margin-top: 20px; padding: 15px; background: #f9fafb; border-radius: 10px;">
+                    <p style="font-weight: 600; color: #374151; margin-bottom: 10px;">📊 Estado Actual de Datos:</p>
+                    <ul style="color: #6b7280; font-size: 14px; list-style: none;">
+                        <li>👥 Usuarios registrados: <strong id="count-users">0</strong></li>
+                        <li>📦 Productos en maestra: <strong id="count-productos">0</strong></li>
+                        <li>📝 Mi conteo actual: <strong id="count-local">0</strong> items</li>
+                        <li>📤 Conteos enviados (consolidado): <strong id="count-conteos">0</strong></li>
+                    </ul>
+                </div>
             </div>
             
         </div>
@@ -381,33 +384,20 @@
 </div>
 
 <script>
-// ==================== STORAGE ====================
 const KEYS = {
     USERS: 'inv_users',
     PRODUCTOS: 'inv_productos',
     CONTEOS: 'inv_conteos',
     CURRENT_USER: 'inv_current_user',
-    LOCAL_CONTEO: 'inv_local_conteo'
+    LOCAL_CONTEO: 'inv_local_conteo',
+    ULTIMO_RESPALDO: 'inv_ultimo_respaldo'
 };
 
-function getStorage(key) {
-    return JSON.parse(localStorage.getItem(key) || '[]');
-}
+function getStorage(key) { return JSON.parse(localStorage.getItem(key) || '[]'); }
+function setStorage(key, data) { localStorage.setItem(key, JSON.stringify(data)); }
+function getCurrentUser() { const u = localStorage.getItem(KEYS.CURRENT_USER); return u ? JSON.parse(u) : null; }
+function setCurrentUser(user) { localStorage.setItem(KEYS.CURRENT_USER, JSON.stringify(user)); }
 
-function setStorage(key, data) {
-    localStorage.setItem(key, JSON.stringify(data));
-}
-
-function getCurrentUser() {
-    const user = localStorage.getItem(KEYS.CURRENT_USER);
-    return user ? JSON.parse(user) : null;
-}
-
-function setCurrentUser(user) {
-    localStorage.setItem(KEYS.CURRENT_USER, JSON.stringify(user));
-}
-
-// ==================== TOAST ====================
 function showToast(message, type = 'success') {
     const toast = document.getElementById('toast');
     toast.textContent = message;
@@ -415,19 +405,97 @@ function showToast(message, type = 'success') {
     setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
-// ==================== CLOCK ====================
 function updateClock() {
     const options = { timeZone: 'America/Bogota', hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' };
     document.getElementById('clock').textContent = 'Colombia: ' + new Date().toLocaleString('es-CO', options);
 }
 setInterval(updateClock, 1000);
 
-function getColombiaDate() {
-    return new Date().toLocaleDateString('es-CO', { timeZone: 'America/Bogota', day: '2-digit', month: '2-digit', year: 'numeric' });
+function getColombiaDate() { return new Date().toLocaleDateString('es-CO', { timeZone: 'America/Bogota', day: '2-digit', month: '2-digit', year: 'numeric' }); }
+function getColombiaTime() { return new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota', hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' }); }
+
+// ==================== RESPALDO COMPLETO ====================
+function descargarRespaldoCompleto() {
+    const respaldo = {
+        version: '1.0',
+        fecha: getColombiaTime(),
+        datos: {
+            usuarios: getStorage(KEYS.USERS),
+            productos: getStorage(KEYS.PRODUCTOS),
+            conteos: getStorage(KEYS.CONTEOS),
+            conteo_local: JSON.parse(localStorage.getItem(KEYS.LOCAL_CONTEO) || '[]')
+        }
+    };
+    
+    const blob = new Blob([JSON.stringify(respaldo, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Respaldo_Inventario_${getColombiaDate().replace(/\//g, '-')}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    
+    localStorage.setItem(KEYS.ULTIMO_RESPALDO, getColombiaTime());
+    document.getElementById('ultimo-respaldo').textContent = getColombiaTime();
+    showToast('Respaldo descargado correctamente');
 }
 
-function getColombiaTime() {
-    return new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota', hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' });
+function restaurarRespaldo(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (!confirm('⚠️ ATENCIÓN: Esto reemplazará TODOS los datos actuales con los del respaldo. ¿Continuar?')) { e.target.value = ''; return; }
+    
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+        try {
+            const respaldo = JSON.parse(ev.target.result);
+            if (!respaldo.datos || !respaldo.datos.usuarios) throw new Error('Inválido');
+            setStorage(KEYS.USERS, respaldo.datos.usuarios);
+            setStorage(KEYS.PRODUCTOS, respaldo.datos.productos || []);
+            setStorage(KEYS.CONTEOS, respaldo.datos.conteos || []);
+            localStorage.setItem(KEYS.LOCAL_CONTEO, JSON.stringify(respaldo.datos.conteo_local || []));
+            showToast('✅ Respaldo restaurado correctamente');
+            actualizarContadores();
+            if (currentUser) { loadLocalConteo(); renderConteoTable(); }
+        } catch (err) { showToast('Error: Archivo de respaldo inválido', 'error'); }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+}
+
+function restaurarRespaldoLogin(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+        try {
+            const respaldo = JSON.parse(ev.target.result);
+            if (!respaldo.datos || !respaldo.datos.usuarios) throw new Error('Inválido');
+            setStorage(KEYS.USERS, respaldo.datos.usuarios);
+            setStorage(KEYS.PRODUCTOS, respaldo.datos.productos || []);
+            setStorage(KEYS.CONTEOS, respaldo.datos.conteos || []);
+            localStorage.setItem(KEYS.LOCAL_CONTEO, JSON.stringify(respaldo.datos.conteo_local || []));
+            showToast('✅ Respaldo restaurado. Ahora inicia sesión.');
+        } catch (err) { showToast('Error: Archivo de respaldo inválido', 'error'); }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+}
+
+function borrarTodosDatos() {
+    if (!confirm('⚠️ ¿BORRAR TODO?')) return;
+    localStorage.clear();
+    showToast('Todos los datos han sido borrados');
+    setTimeout(() => location.reload(), 1500);
+}
+
+function actualizarContadores() {
+    document.getElementById('count-users').textContent = getStorage(KEYS.USERS).length;
+    document.getElementById('count-productos').textContent = getStorage(KEYS.PRODUCTOS).length;
+    document.getElementById('count-local').textContent = JSON.parse(localStorage.getItem(KEYS.LOCAL_CONTEO) || '[]').length;
+    document.getElementById('count-conteos').textContent = getStorage(KEYS.CONTEOS).length;
+    const ultimoResp = localStorage.getItem(KEYS.ULTIMO_RESPALDO);
+    document.getElementById('ultimo-respaldo').textContent = ultimoResp || 'Nunca';
 }
 
 // ==================== AUTH ====================
@@ -440,7 +508,7 @@ document.getElementById('toggle-register').onclick = function() {
     isRegistering = !isRegistering;
     document.getElementById('register-role-group').classList.toggle('hidden', !isRegistering);
     document.getElementById('login-btn').textContent = isRegistering ? 'Registrarse' : 'Ingresar';
-    this.textContent = isRegistering ? '¿Ya tienes cuenta? Inicia sesión' : '¿Primera vez? Registrarse';
+    this.textContent = isRegistering ? 'Inicia sesión' : 'Registrarse';
     document.getElementById('login-alert').innerHTML = '';
 };
 
@@ -450,32 +518,19 @@ document.getElementById('login-form').onsubmit = function(e) {
     const password = document.getElementById('login-pass').value;
     const machine = document.getElementById('login-machine').value.trim();
     const role = document.getElementById('register-role').value;
-    
     const users = getStorage(KEYS.USERS);
     
     if (isRegistering) {
-        if (users.find(u => u.username === username)) {
-            showAlert('Usuario ya existe', 'error');
-            return;
-        }
-        if (role === 'admin' && users.filter(u => u.role === 'admin').length >= 1) {
-            showAlert('Ya existe un administrador', 'error');
-            return;
-        }
-        if (role === 'capturador' && users.filter(u => u.role === 'capturador').length >= 3) {
-            showAlert('Máximo 3 capturadores permitidos', 'error');
-            return;
-        }
+        if (users.find(u => u.username === username)) { showAlert('Usuario ya existe', 'error'); return; }
+        if (role === 'admin' && users.filter(u => u.role === 'admin').length >= 1) { showAlert('Ya existe admin', 'error'); return; }
+        if (role === 'capturador' && users.filter(u => u.role === 'capturador').length >= 3) { showAlert('Máximo 3 capturadores', 'error'); return; }
         users.push({ id: Date.now().toString(), username, password, machine_name: machine, role });
         setStorage(KEYS.USERS, users);
-        showAlert('Usuario creado. Ahora inicia sesión.', 'success');
+        showAlert('Usuario creado. Inicia sesión.', 'success');
         document.getElementById('toggle-register').click();
     } else {
         const user = users.find(u => u.username === username && u.password === password);
-        if (!user) {
-            showAlert('Credenciales inválidas', 'error');
-            return;
-        }
+        if (!user) { showAlert('Credenciales inválidas', 'error'); return; }
         user.machine_name = machine;
         setStorage(KEYS.USERS, users);
         setCurrentUser(user);
@@ -484,29 +539,19 @@ document.getElementById('login-form').onsubmit = function(e) {
     }
 };
 
-function showAlert(message, type) {
-    document.getElementById('login-alert').innerHTML = `<div class="alert alert-${type}">${message}</div>`;
-}
-
-function logout() {
-    localStorage.removeItem(KEYS.CURRENT_USER);
-    currentUser = null;
-    document.getElementById('login-screen').style.display = 'flex';
-    document.getElementById('app-screen').style.display = 'none';
-    document.getElementById('login-form').reset();
-}
+function showAlert(message, type) { document.getElementById('login-alert').innerHTML = `<div class="alert alert-${type}">${message}</div>`; }
+function logout() { localStorage.removeItem(KEYS.CURRENT_USER); location.reload(); }
 
 function showApp() {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('app-screen').style.display = 'block';
     document.getElementById('display-user').textContent = currentUser.username;
     document.getElementById('display-machine').textContent = `${currentUser.machine_name} • ${currentUser.role}`;
-    document.querySelectorAll('.admin-only').forEach(el => {
-        el.classList.toggle('hidden', currentUser.role !== 'admin');
-    });
+    document.querySelectorAll('.admin-only').forEach(el => { el.classList.toggle('hidden', currentUser.role !== 'admin'); });
     updateClock();
     loadLocalConteo();
     renderConteoTable();
+    actualizarContadores();
 }
 
 // ==================== TABS ====================
@@ -521,25 +566,22 @@ document.querySelectorAll('.tab').forEach(tab => {
         if (this.dataset.tab === 'usuarios') renderUsuarios();
         if (this.dataset.tab === 'historial') renderHistorial();
         if (this.dataset.tab === 'consolidado') cargarConsolidado();
+        if (this.dataset.tab === 'respaldo') actualizarContadores();
     };
 });
 
-// ==================== PRODUCTOS (MAESTRO) ====================
+// ==================== PRODUCTOS ====================
 function renderMaestro() {
     const productos = getStorage(KEYS.PRODUCTOS);
     const search = document.getElementById('search-maestro').value.toLowerCase();
     const filtered = productos.filter(p => p.nombre.toLowerCase().includes(search));
     document.getElementById('tabla-maestro').innerHTML = filtered.map(p => `
-        <tr>
-            <td>${p.nombre}</td>
-            <td>${p.unidad}</td>
-            <td class="text-right">$${p.costo.toLocaleString()}</td>
-            <td class="text-center">
-                <button class="btn btn-warning" style="padding: 6px 12px; font-size: 13px;" onclick="editarProducto('${p.id}')">Editar</button>
-                <button class="btn btn-danger" style="padding: 6px 12px; font-size: 13px;" onclick="eliminarProducto('${p.id}')">Eliminar</button>
-            </td>
-        </tr>
-    `).join('') || '<tr><td colspan="4" style="text-align:center; color:#6b7280; padding: 40px;">No hay productos</td></tr>';
+        <tr><td>${p.nombre}</td><td>${p.unidad}</td><td class="text-right">$${p.costo.toLocaleString()}</td>
+        <td class="text-center">
+            <button class="btn btn-warning" style="padding: 6px 12px; font-size: 12px;" onclick="editarProducto('${p.id}')">✏️</button>
+            <button class="btn btn-danger" style="padding: 6px 12px; font-size: 12px;" onclick="eliminarProducto('${p.id}')">🗑️</button>
+        </td></tr>
+    `).join('') || '<tr><td colspan="4" style="text-align:center;">No hay productos</td></tr>';
     document.getElementById('total-productos').textContent = filtered.length;
 }
 
@@ -547,30 +589,25 @@ function guardarProducto() {
     const nombre = document.getElementById('prod-nombre').value.trim();
     const unidad = document.getElementById('prod-unidad').value.trim();
     const costo = parseFloat(document.getElementById('prod-costo').value) || 0;
-    if (!nombre || !unidad) {
-        showToast('Nombre y unidad son requeridos', 'error');
-        return;
-    }
+    if (!nombre || !unidad) { showToast('Nombre y unidad requeridos', 'error'); return; }
     const productos = getStorage(KEYS.PRODUCTOS);
     if (editingProductId) {
         const idx = productos.findIndex(p => p.id === editingProductId);
         if (idx !== -1) productos[idx] = { ...productos[idx], nombre, unidad, costo };
         cancelarEdicion();
-        showToast('Producto actualizado');
     } else {
         productos.push({ id: Date.now().toString(), nombre, unidad, costo });
-        showToast('Producto guardado');
     }
     setStorage(KEYS.PRODUCTOS, productos);
     document.getElementById('prod-nombre').value = '';
     document.getElementById('prod-unidad').value = '';
     document.getElementById('prod-costo').value = '';
     renderMaestro();
+    showToast('Guardado');
 }
 
 function editarProducto(id) {
-    const productos = getStorage(KEYS.PRODUCTOS);
-    const p = productos.find(x => x.id === id);
+    const p = getStorage(KEYS.PRODUCTOS).find(x => x.id === id);
     if (!p) return;
     editingProductId = id;
     document.getElementById('prod-nombre').value = p.nombre;
@@ -592,22 +629,16 @@ function cancelarEdicion() {
 }
 
 function eliminarProducto(id) {
-    if (!confirm('¿Eliminar este producto?')) return;
-    let productos = getStorage(KEYS.PRODUCTOS);
-    productos = productos.filter(p => p.id !== id);
-    setStorage(KEYS.PRODUCTOS, productos);
-    showToast('Producto eliminado');
+    if (!confirm('¿Eliminar?')) return;
+    setStorage(KEYS.PRODUCTOS, getStorage(KEYS.PRODUCTOS).filter(p => p.id !== id));
     renderMaestro();
 }
 
 function exportarMaestro() {
-    const productos = getStorage(KEYS.PRODUCTOS);
-    const data = productos.map(p => ({ Nombre: p.nombre, Unidad: p.unidad, Costo: p.costo }));
-    const ws = XLSX.utils.json_to_sheet(data);
+    const ws = XLSX.utils.json_to_sheet(getStorage(KEYS.PRODUCTOS).map(p => ({ Nombre: p.nombre, Unidad: p.unidad, Costo: p.costo })));
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Productos');
-    XLSX.writeFile(wb, `Backup_Productos_${getColombiaDate().replace(/\//g, '-')}.xlsx`);
-    showToast('Backup exportado');
+    XLSX.writeFile(wb, `Productos_${getColombiaDate()}.xlsx`);
 }
 
 function importarMaestro(e) {
@@ -615,24 +646,21 @@ function importarMaestro(e) {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = function(ev) {
-        const data = new Uint8Array(ev.target.result);
-        const workbook = XLSX.read(data, { type: 'array' });
-        const jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
-        const productos = jsonData.map(row => ({
-            id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
-            nombre: (row.Nombre || row.nombre || '').toString(),
-            unidad: (row.Unidad || row.unidad || '').toString(),
-            costo: parseFloat(row.Costo || row.costo || 0)
+        const workbook = XLSX.read(new Uint8Array(ev.target.result), { type: 'array' });
+        const productos = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]).map(row => ({
+            id: Date.now().toString() + Math.random(),
+            nombre: (row.Nombre || '').toString(),
+            unidad: (row.Unidad || '').toString(),
+            costo: parseFloat(row.Costo || 0)
         }));
         setStorage(KEYS.PRODUCTOS, productos);
-        showToast(`${productos.length} productos importados`);
         renderMaestro();
+        showToast('Importado');
     };
     reader.readAsArrayBuffer(file);
-    e.target.value = '';
 }
 
-// ==================== CAPTURA CONTEO ====================
+// ==================== CAPTURA ====================
 let localConteo = [];
 function loadLocalConteo() { localConteo = JSON.parse(localStorage.getItem(KEYS.LOCAL_CONTEO) || '[]'); }
 function saveLocalConteo() { localStorage.setItem(KEYS.LOCAL_CONTEO, JSON.stringify(localConteo)); }
@@ -641,20 +669,14 @@ function searchProducts() {
     const query = document.getElementById('search-product').value.toLowerCase();
     const results = document.getElementById('search-results');
     if (!query) { results.classList.remove('show'); return; }
-    const productos = getStorage(KEYS.PRODUCTOS);
-    const filtered = productos.filter(p => p.nombre.toLowerCase().includes(query)).slice(0, 10);
+    const filtered = getStorage(KEYS.PRODUCTOS).filter(p => p.nombre.toLowerCase().includes(query)).slice(0, 10);
     if (filtered.length === 0) { results.classList.remove('show'); return; }
-    results.innerHTML = filtered.map(p => `
-        <div class="search-item" onclick="selectProductForCount('${p.id}')">
-            <strong>${p.nombre}</strong> <span style="color:#6b7280;">(${p.unidad})</span>
-        </div>
-    `).join('');
+    results.innerHTML = filtered.map(p => `<div class="search-item" onclick="selectProductForCount('${p.id}')"><strong>${p.nombre}</strong> (${p.unidad})</div>`).join('');
     results.classList.add('show');
 }
 
 function selectProductForCount(id) {
-    const productos = getStorage(KEYS.PRODUCTOS);
-    selectedProduct = productos.find(p => p.id === id);
+    selectedProduct = getStorage(KEYS.PRODUCTOS).find(p => p.id === id);
     if (selectedProduct) {
         document.getElementById('search-product').value = selectedProduct.nombre;
         document.getElementById('selected-unit').value = selectedProduct.unidad;
@@ -663,189 +685,100 @@ function selectProductForCount(id) {
     }
 }
 
-document.addEventListener('click', function(e) {
-    if (!e.target.closest('.search-box')) document.getElementById('search-results').classList.remove('show');
-});
+document.addEventListener('click', function(e) { if (!e.target.closest('.search-box')) document.getElementById('search-results').classList.remove('show'); });
 
 function registrarConteo() {
     const cantidad = parseFloat(document.getElementById('input-cantidad').value);
-    if (!selectedProduct) { showToast('Selecciona un producto', 'error'); return; }
-    if (!cantidad || cantidad <= 0) { showToast('Ingresa una cantidad válida', 'error'); return; }
-    localConteo.push({
-        producto_id: selectedProduct.id,
-        nombre: selectedProduct.nombre,
-        unidad: selectedProduct.unidad,
-        cantidad: cantidad,
-        fecha: getColombiaTime()
-    });
+    if (!selectedProduct || !cantidad || cantidad <= 0) { showToast('Datos inválidos', 'error'); return; }
+    localConteo.push({ producto_id: selectedProduct.id, nombre: selectedProduct.nombre, unidad: selectedProduct.unidad, cantidad, fecha: getColombiaTime() });
     saveLocalConteo();
     renderConteoTable();
-    selectedProduct = null;
     document.getElementById('search-product').value = '';
     document.getElementById('selected-unit').value = '';
     document.getElementById('input-cantidad').value = '';
-    showToast('Producto registrado');
+    showToast('Registrado');
 }
 
 function renderConteoTable() {
     document.getElementById('tabla-conteo').innerHTML = localConteo.map((item, idx) => `
-        <tr>
-            <td>${item.nombre}</td>
-            <td>${item.unidad}</td>
-            <td class="text-right" style="font-weight: 600;">${item.cantidad}</td>
-            <td class="text-center">
-                <button class="btn btn-danger" style="padding: 6px 12px; font-size: 13px;" onclick="eliminarConteoItem(${idx})">Eliminar</button>
-            </td>
-        </tr>
-    `).join('') || '<tr><td colspan="4" style="text-align:center; color:#6b7280; padding: 40px;">No hay productos en el conteo actual</td></tr>';
+        <tr><td>${item.nombre}</td><td>${item.unidad}</td><td class="text-right">${item.cantidad}</td>
+        <td class="text-center"><button class="btn btn-danger" style="padding: 6px 12px;" onclick="eliminarConteoItem(${idx})">🗑️</button></td></tr>
+    `).join('') || '<tr><td colspan="4" style="text-align:center;">Vacio</td></tr>';
 }
 
-function eliminarConteoItem(idx) {
-    localConteo.splice(idx, 1);
-    saveLocalConteo();
-    renderConteoTable();
-}
+function eliminarConteoItem(idx) { localConteo.splice(idx, 1); saveLocalConteo(); renderConteoTable(); }
 
 function exportarConteoExcel() {
-    if (localConteo.length === 0) { showToast('No hay datos para exportar', 'error'); return; }
-    const data = localConteo.map(item => ({ Producto: item.nombre, Unidad: item.unidad, Cantidad: item.cantidad, Fecha: item.fecha }));
-    const ws = XLSX.utils.json_to_sheet(data);
+    const ws = XLSX.utils.json_to_sheet(localConteo);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Conteo');
-    XLSX.writeFile(wb, `Conteo_${currentUser.machine_name}_${getColombiaDate().replace(/\//g, '-')}.xlsx`);
-    showToast('Conteo exportado a Excel');
+    XLSX.writeFile(wb, `MiConteo_${getColombiaDate()}.xlsx`);
 }
 
 function enviarConsolidado() {
-    if (localConteo.length === 0) { showToast('No hay items para enviar', 'error'); return; }
+    if (localConteo.length === 0) return;
     const conteos = getStorage(KEYS.CONTEOS);
-    conteos.push({
-        id: Date.now().toString(),
-        user_id: currentUser.id,
-        username: currentUser.username,
-        machine_name: currentUser.machine_name,
-        items: [...localConteo],
-        fecha_conteo: getColombiaDate(),
-        fecha_envio: getColombiaTime()
-    });
+    conteos.push({ id: Date.now(), user_id: currentUser.id, username: currentUser.username, machine_name: currentUser.machine_name, items: [...localConteo], fecha_conteo: getColombiaDate() });
     setStorage(KEYS.CONTEOS, conteos);
-    localConteo = [];
-    saveLocalConteo();
-    renderConteoTable();
-    showToast('Conteo enviado al consolidado');
+    localConteo = []; saveLocalConteo(); renderConteoTable();
+    showToast('Enviado');
 }
 
-function limpiarConteo() {
-    if (!confirm('¿Borrar el conteo actual?')) return;
-    localConteo = [];
-    saveLocalConteo();
-    renderConteoTable();
-}
+function limpiarConteo() { if (confirm('¿Borrar?')) { localConteo = []; saveLocalConteo(); renderConteoTable(); } }
 
-// ==================== HISTORIAL ====================
+// ==================== HISTORIAL / CONSOLIDADO / USUARIOS ====================
 function renderHistorial() {
     const conteos = getStorage(KEYS.CONTEOS).filter(c => c.user_id === currentUser.id);
-    if (conteos.length === 0) {
-        document.getElementById('historial-container').innerHTML = '<p style="text-align:center; color:#6b7280; padding: 40px;">No has enviado conteos aún</p>';
-        return;
-    }
-    document.getElementById('historial-container').innerHTML = conteos.reverse().map(conteo => `
-        <div style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px; margin-bottom: 15px;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                <strong>Fecha: ${conteo.fecha_conteo}</strong>
-                <span style="color: #6b7280;">${conteo.items.length} productos</span>
-            </div>
-            <table style="width: 100%; font-size: 14px;">
-                <thead><tr style="background: #f9fafb;"><th style="padding: 8px;">Producto</th><th style="padding: 8px;">Unidad</th><th style="padding: 8px; text-align: right;">Cantidad</th></tr></thead>
-                <tbody>
-                    ${conteo.items.map(item => `<tr><td style="padding: 8px; border-top: 1px solid #e5e7eb;">${item.nombre}</td><td style="padding: 8px; border-top: 1px solid #e5e7eb;">${item.unidad}</td><td style="padding: 8px; border-top: 1px solid #e5e7eb; text-align: right;">${item.cantidad}</td></tr>`).join('')}
-                </tbody>
-            </table>
-        </div>
-    `).join('');
+    document.getElementById('historial-container').innerHTML = conteos.reverse().map(c => `
+        <div style="border: 1px solid #eee; padding: 10px; margin-bottom: 10px; border-radius: 8px;">
+            <strong>${c.fecha_conteo}</strong> - ${c.items.length} items
+        </div>`).join('') || 'Sin historial';
 }
 
-// ==================== CONSOLIDADO ====================
 function cargarConsolidado() {
     const filtro = document.getElementById('filtro-fecha').value;
     let conteos = getStorage(KEYS.CONTEOS);
-    const productos = getStorage(KEYS.PRODUCTOS);
     if (filtro) conteos = conteos.filter(c => c.fecha_conteo.includes(filtro));
-    const productoMap = {};
-    productos.forEach(p => productoMap[p.id] = p);
+    const productos = getStorage(KEYS.PRODUCTOS);
+    const productoMap = {}; productos.forEach(p => productoMap[p.id] = p);
     const consolidado = {};
-    conteos.forEach(conteo => {
-        conteo.items.forEach(item => {
-            if (!consolidado[item.producto_id]) {
-                const prod = productoMap[item.producto_id] || {};
-                consolidado[item.producto_id] = { nombre: item.nombre, unidad: item.unidad, cantidad_total: 0, costo: prod.costo || 0, conteos_por_maquina: [] };
-            }
-            consolidado[item.producto_id].cantidad_total += item.cantidad;
-            consolidado[item.producto_id].conteos_por_maquina.push({ machine: conteo.machine_name, cantidad: item.cantidad });
-        });
-    });
+    conteos.forEach(c => c.items.forEach(item => {
+        if (!consolidado[item.producto_id]) consolidado[item.producto_id] = { nombre: item.nombre, unidad: item.unidad, total: 0, costo: (productoMap[item.producto_id] || {}).costo || 0, maquinas: [] };
+        consolidado[item.producto_id].total += item.cantidad;
+        consolidado[item.producto_id].maquinas.push(`${c.machine_name}: ${item.cantidad}`);
+    }));
     const items = Object.values(consolidado);
-    let total = 0;
-    document.getElementById('tabla-consolidado').innerHTML = items.map(item => {
-        const subtotal = item.cantidad_total * item.costo;
-        total += subtotal;
-        return `<tr>
-            <td style="font-weight: 600;">${item.nombre}</td>
-            <td>${item.unidad}</td>
-            <td class="text-right" style="font-weight: bold; color: #10b981;">${item.cantidad_total}</td>
-            <td class="text-right">$${item.costo.toLocaleString()}</td>
-            <td class="text-right" style="font-weight: 600;">$${subtotal.toLocaleString()}</td>
-            <td>${item.conteos_por_maquina.map(c => `<span class="badge badge-machine">${c.machine}: ${c.cantidad}</span>`).join(' ')}</td>
-        </tr>`;
-    }).join('') || '<tr><td colspan="6" style="text-align:center; color:#6b7280; padding: 40px;">No hay datos</td></tr>';
-    document.getElementById('consolidado-stats').classList.toggle('hidden', items.length === 0);
+    let totalVal = 0;
+    document.getElementById('tabla-consolidado').innerHTML = items.map(i => {
+        const sub = i.total * i.costo; totalVal += sub;
+        return `<tr><td>${i.nombre}</td><td>${i.unidad}</td><td class="text-right">${i.total}</td><td class="text-right">$${i.costo}</td><td class="text-right">$${sub}</td><td>${i.maquinas.join(', ')}</td></tr>`;
+    }).join('') || 'Sin datos';
+    document.getElementById('consolidado-stats').classList.remove('hidden');
     document.getElementById('stat-items').textContent = items.length;
     document.getElementById('stat-conteos').textContent = conteos.length;
-    document.getElementById('stat-total').textContent = '$' + total.toLocaleString();
-    window.consolidadoData = { items, total, conteos };
+    document.getElementById('stat-total').textContent = '$' + totalVal.toLocaleString();
+    window.consolidadoData = { items, totalVal };
 }
 
 function exportarConsolidado() {
-    if (!window.consolidadoData || window.consolidadoData.items.length === 0) { showToast('No hay datos', 'error'); return; }
-    const data = window.consolidadoData.items.map(item => ({ Producto: item.nombre, Unidad: item.unidad, 'Cantidad Total': item.cantidad_total, 'Costo Unitario': item.costo, Subtotal: item.cantidad_total * item.costo }));
-    data.push({ Producto: '', Unidad: '', 'Cantidad Total': '', 'Costo Unitario': 'TOTAL:', Subtotal: window.consolidadoData.total });
-    const ws = XLSX.utils.json_to_sheet(data);
+    const ws = XLSX.utils.json_to_sheet(window.consolidadoData.items);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Consolidado');
-    XLSX.writeFile(wb, `Consolidado_${getColombiaDate().replace(/\//g, '-')}.xlsx`);
+    XLSX.writeFile(wb, `Consolidado_${getColombiaDate()}.xlsx`);
 }
 
-function limpiarConsolidado() {
-    if (!confirm('¿Eliminar TODO?')) return;
-    setStorage(KEYS.CONTEOS, []);
-    cargarConsolidado();
-}
+function limpiarConsolidado() { if (confirm('¿Limpiar todo?')) { setStorage(KEYS.CONTEOS, []); cargarConsolidado(); } }
 
-// ==================== USUARIOS ====================
 function renderUsuarios() {
-    const users = getStorage(KEYS.USERS);
-    document.getElementById('tabla-usuarios').innerHTML = users.map(u => `
-        <tr>
-            <td style="font-weight: 600;">${u.username}</td>
-            <td>${u.machine_name}</td>
-            <td><span class="badge badge-${u.role}">${u.role}</span></td>
-            <td class="text-center">
-                ${u.role !== 'admin' ? `<button class="btn btn-danger" style="padding: 6px 12px; font-size: 13px;" onclick="eliminarUsuario('${u.id}')">Eliminar</button>` : ''}
-            </td>
-        </tr>
+    document.getElementById('tabla-usuarios').innerHTML = getStorage(KEYS.USERS).map(u => `
+        <tr><td>${u.username}</td><td>${u.machine_name}</td><td>${u.role}</td>
+        <td class="text-center">${u.role !== 'admin' ? `<button class="btn btn-danger" onclick="eliminarUsuario('${u.id}')">🗑️</button>` : ''}</td></tr>
     `).join('');
 }
 
-function eliminarUsuario(id) {
-    if (!confirm('¿Eliminar usuario?')) return;
-    let users = getStorage(KEYS.USERS);
-    users = users.filter(u => u.id !== id);
-    setStorage(KEYS.USERS, users);
-    renderUsuarios();
-}
+function eliminarUsuario(id) { setStorage(KEYS.USERS, getStorage(KEYS.USERS).filter(u => u.id !== id)); renderUsuarios(); }
 
-// ==================== INIT ====================
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     currentUser = getCurrentUser();
     if (currentUser) showApp();
 });

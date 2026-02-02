@@ -18,7 +18,7 @@
         .btn { padding: 14px 24px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; transition: all 0.3s; font-size: 15px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
         .btn-primary { background: #10b981; color: white; width: 100%; }
         .btn-success { background: #16a34a; color: white; margin-top: 10px; }
-        .btn-logout { background: #ef4444; color: white; padding: 8px 16px; font-size: 13px; border-radius: 10px; }
+        .btn-logout { background: #ef4444; color: white; padding: 8px 16px; font-size: 13px; border-radius: 10px; border:none; cursor:pointer; }
         .app-container { display: none; min-height: 100vh; background: #f3f4f6; }
         .header { background: linear-gradient(135deg, #065f46 0%, #0d9488 100%); color: white; padding: 15px 20px; }
         .header-content { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
@@ -30,9 +30,10 @@
         table { width: 100%; border-collapse: collapse; }
         th, td { padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: left; }
         .text-right { text-align: right; }
-        .search-results { position: absolute; background: white; border: 1px solid #ccc; width: 100%; z-index: 100; max-height: 200px; overflow-y: auto; display: none; }
+        .search-results { position: absolute; background: white; border: 1px solid #ccc; width: 100%; z-index: 100; max-height: 200px; overflow-y: auto; display: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .search-results.show { display: block; }
         .search-item { padding: 10px; cursor: pointer; border-bottom: 1px solid #eee; }
+        .search-item:hover { background: #f0fdf4; }
         .hidden { display: none !important; }
         .stat-card { background: #1f2937; color: #34d399; padding: 20px; border-radius: 12px; font-size: 24px; font-weight: bold; text-align: center; margin-bottom: 20px; }
         .toast { position: fixed; top: 20px; right: 20px; padding: 15px; border-radius: 10px; color: white; z-index: 9999; display: none; }
@@ -56,7 +57,7 @@
                 <select id="register-role"><option value="capturador">Capturador</option><option value="admin">Administrador</option></select>
             </div>
             <button type="submit" class="btn btn-primary" id="login-btn">Ingresar</button>
-            <button type="button" class="btn-logout" id="toggle-register" style="background:none; color:#10b981; width:100%; margin-top:10px;">¿Registrarse?</button>
+            <button type="button" class="link-btn" id="toggle-register" style="background:none; border:none; color:#10b981; width:100%; margin-top:10px; cursor:pointer;">¿Registrarse?</button>
         </form>
     </div>
 </div>
@@ -65,8 +66,8 @@
     <header class="header">
         <div class="header-content">
             <div><h1>VIBRAS POSITIVAS</h1><p id="clock">00:00:00</p></div>
-            <div style="text-align:right;"><strong id="display-user"></strong><br><span id="display-machine"></span><br>
-            <button class="btn-logout" onclick="logout()">Salir</button></div>
+            <div style="text-align:right;"><strong id="display-user"></strong> - <span id="display-machine"></span><br>
+            <button class="btn-logout" onclick="logout()" style="margin-top:5px;">Salir</button></div>
         </div>
     </header>
 
@@ -81,16 +82,16 @@
             <div style="display:grid; grid-template-columns: 2fr 1fr 1fr; gap:10px; position:relative;">
                 <div class="form-group">
                     <label>Buscar Producto (844 en lista)</label>
-                    <input type="text" id="search-product" oninput="searchProducts()">
+                    <input type="text" id="search-product" oninput="searchProducts()" autocomplete="off">
                     <div id="search-results" class="search-results"></div>
                 </div>
-                <div class="form-group"><label>Unidad</label><input type="text" id="selected-unit" readonly></div>
+                <div class="form-group"><label>Unidad</label><input type="text" id="selected-unit" readonly style="background:#f9fafb;"></div>
                 <div class="form-group"><label>Cantidad</label><input type="number" id="input-cantidad" step="0.01"></div>
             </div>
             <button class="btn btn-primary" onclick="registrarConteo()">Añadir a la lista</button>
             <div class="table-container">
                 <table>
-                    <thead><tr><th>Producto</th><th>Cant.</th><th>Acción</th></tr></thead>
+                    <thead><tr><th>Producto</th><th>Unidad</th><th>Cant.</th><th>Acción</th></tr></thead>
                     <tbody id="tabla-conteo"></tbody>
                 </table>
             </div>
@@ -101,10 +102,11 @@
             <div class="stat-card">Total Liquidado: <span id="stat-total">$0</span></div>
             <div class="table-container">
                 <table>
-                    <thead><tr><th>Producto</th><th>Und.</th><th>Cant.</th><th>Costo</th><th>Subtotal</th><th>Máquinas</th></tr></thead>
+                    <thead><tr><th>Producto</th><th>Und.</th><th>Cant. Total</th><th>Costo</th><th>Subtotal</th><th>Máquinas</th></tr></thead>
                     <tbody id="tabla-consolidado"></tbody>
                 </table>
             </div>
+            <button class="btn btn-logout" onclick="limpiarConsolidado()" style="margin-top:20px;">🗑️ Limpiar Consolidado</button>
         </div>
 
         <div id="tab-maestro" class="tab-content">
@@ -121,19 +123,28 @@
 <script>
 const KEYS = { USERS: 'inv_users', PRODUCTOS: 'inv_productos', CONTEOS: 'inv_conteos', CURRENT_USER: 'inv_current_user', LOCAL_CONTEO: 'inv_local_conteo' };
 
+// --- SINCRONIZACIÓN DESDE GITHUB ---
 async function sincronizarDesdeGitHub() {
+    // La URL debe ser el 'Raw' de tu archivo en GitHub
     const url = 'https://raw.githubusercontent.com/haroldco45/gestioninventariovibras/main/data/productos.json';
     try {
         const res = await fetch(url);
+        if (!res.ok) throw new Error('Error al conectar con GitHub');
         const data = await res.json();
         localStorage.setItem(KEYS.PRODUCTOS, JSON.stringify(data));
-        showToast("📦 Lista de productos sincronizada");
+        showToast("📦 Productos sincronizados desde GitHub");
         if(currentUser?.role === 'admin') renderMaestro();
-    } catch(e) { console.error("Error sincronizando", e); }
+    } catch(e) { 
+        console.error("Error sincronizando", e);
+        showToast("⚠️ Error al cargar productos de GitHub", "error");
+    }
 }
 
-function showToast(msg) { 
-    const t = document.getElementById('toast'); t.textContent = msg; t.style.display = 'block'; t.style.background = '#10b981';
+function showToast(msg, type = 'success') { 
+    const t = document.getElementById('toast'); 
+    t.textContent = msg; 
+    t.style.display = 'block'; 
+    t.style.background = type === 'success' ? '#10b981' : '#ef4444';
     setTimeout(() => t.style.display = 'none', 3000);
 }
 
@@ -143,22 +154,29 @@ const setS = (k, d) => localStorage.setItem(k, JSON.stringify(d));
 let currentUser = JSON.parse(localStorage.getItem(KEYS.CURRENT_USER));
 let localConteo = getS(KEYS.LOCAL_CONTEO);
 
+// --- LOGIN / REGISTRO ---
 document.getElementById('login-form').onsubmit = function(e) {
     e.preventDefault();
     const user = document.getElementById('login-user').value.trim();
     const pass = document.getElementById('login-pass').value;
-    const machine = document.getElementById('login-machine').value;
+    const machine = document.getElementById('login-machine').value.trim();
     const users = getS(KEYS.USERS);
 
     if (document.getElementById('login-btn').textContent === 'Registrarse') {
         const role = document.getElementById('register-role').value;
+        if(users.find(u => u.username === user)) { alert("Usuario ya existe"); return; }
         users.push({ username: user, password: pass, role, machine });
         setS(KEYS.USERS, users);
+        showToast("Usuario creado correctamente");
         location.reload();
     } else {
         const found = users.find(u => u.username === user && u.password === pass);
-        if (found) { setS(KEYS.CURRENT_USER, found); location.reload(); }
-        else { alert("Credenciales incorrectas"); }
+        if (found) { 
+            found.machine = machine; // Actualizar máquina al entrar
+            setS(KEYS.CURRENT_USER, found); 
+            location.reload(); 
+        }
+        else { showToast("Credenciales incorrectas", "error"); }
     }
 };
 
@@ -171,76 +189,120 @@ document.getElementById('toggle-register').onclick = function() {
 
 function logout() { localStorage.removeItem(KEYS.CURRENT_USER); location.reload(); }
 
+// --- BÚSQUEDA Y CAPTURA ---
 function searchProducts() {
     const q = document.getElementById('search-product').value.toLowerCase();
     const res = document.getElementById('search-results');
     if (!q) { res.classList.remove('show'); return; }
-    const filtered = getS(KEYS.PRODUCTOS).filter(p => p.nombre.toLowerCase().includes(q)).slice(0, 15);
-    res.innerHTML = filtered.map(p => `<div class="search-item" onclick="selectP('${p.nombre}','${p.unidad}')">${p.nombre}</div>`).join('');
+    
+    // Buscar en la lista de 844 productos
+    const maestro = getS(KEYS.PRODUCTOS);
+    const filtered = maestro.filter(p => p.nombre.toLowerCase().includes(q)).slice(0, 15);
+    
+    res.innerHTML = filtered.map(p => 
+        `<div class="search-item" onclick="selectP('${p.nombre.replace(/'/g, "\\'")}','${p.unidad}')">
+            <strong>${p.nombre}</strong> <br> <small>Unidad: ${p.unidad}</small>
+        </div>`).join('');
     res.classList.add('show');
 }
 
 function selectP(n, u) {
     document.getElementById('search-product').value = n;
-    document.getElementById('selected-unit').value = u;
+    document.getElementById('selected-unit').value = u; // Ahora carga la unidad automáticamente
     document.getElementById('search-results').classList.remove('show');
+    document.getElementById('input-cantidad').focus();
 }
 
 function registrarConteo() {
     const n = document.getElementById('search-product').value;
+    const u = document.getElementById('selected-unit').value;
     const c = document.getElementById('input-cantidad').value;
-    if (!n || !c) return;
-    localConteo.push({ nombre: n, cantidad: c, maquina: currentUser.machine, unidad: document.getElementById('selected-unit').value });
+    if (!n || !c || c <= 0) { showToast("Datos incompletos", "error"); return; }
+    
+    localConteo.push({ nombre: n, unidad: u, cantidad: parseFloat(c), maquina: currentUser.machine });
     setS(KEYS.LOCAL_CONTEO, localConteo);
     renderConteoTable();
+    
+    // Limpiar campos
+    document.getElementById('search-product').value = '';
+    document.getElementById('selected-unit').value = '';
+    document.getElementById('input-cantidad').value = '';
+    showToast("Añadido");
 }
 
 function renderConteoTable() {
     document.getElementById('tabla-conteo').innerHTML = localConteo.map((it, i) => 
-        `<tr><td>${it.nombre}</td><td>${it.cantidad}</td><td><button onclick="borrarC(${i})">❌</button></td></tr>`).join('');
+        `<tr><td>${it.nombre}</td><td>${it.unidad}</td><td>${it.cantidad}</td><td><button onclick="borrarC(${i})" style="cursor:pointer; border:none; background:none;">❌</button></td></tr>`).join('');
 }
 
 function borrarC(i) { localConteo.splice(i, 1); setS(KEYS.LOCAL_CONTEO, localConteo); renderConteoTable(); }
 
 function enviarInventario() {
-    if (localConteo.length === 0) return;
+    if (localConteo.length === 0) { alert("La lista está vacía"); return; }
     const global = getS(KEYS.CONTEOS);
-    global.push({ items: [...localConteo], fecha: new Date().toLocaleString() });
+    global.push({ items: [...localConteo], fecha: new Date().toLocaleString(), maquina: currentUser.machine });
     setS(KEYS.CONTEOS, global);
-    localConteo = []; setS(KEYS.LOCAL_CONTEO, []);
-    renderConteoTable(); showToast("Enviado al consolidado");
+    localConteo = []; 
+    setS(KEYS.LOCAL_CONTEO, []);
+    renderConteoTable(); 
+    showToast("✅ Inventario enviado al consolidado");
 }
 
+// --- CONSOLIDADO Y LIQUIDACIÓN ---
 function cargarConsolidado() {
     const conteos = getS(KEYS.CONTEOS);
     const maestro = getS(KEYS.PRODUCTOS);
-    const resumen = {}; let total = 0;
+    const resumen = {}; 
+    let totalGeneral = 0;
 
-    conteos.forEach(c => c.items.forEach(it => {
-        if(!resumen[it.nombre]) {
-            const m = maestro.find(p => p.nombre === it.nombre);
-            resumen[it.nombre] = { u: it.unidad, cant: 0, costo: m ? m.costo : 0, maq: [] };
-        }
-        resumen[it.nombre].cant += parseFloat(it.cantidad);
-        if(!resumen[it.nombre].maq.includes(it.maquina)) resumen[it.nombre].maq.push(it.maquina);
-    }));
+    conteos.forEach(envio => {
+        envio.items.forEach(it => {
+            if(!resumen[it.nombre]) {
+                const prod = maestro.find(p => p.nombre === it.nombre);
+                resumen[it.nombre] = { u: it.unidad, cant: 0, costo: prod ? parseFloat(prod.costo) : 0, maq: [] };
+            }
+            resumen[it.nombre].cant += it.cantidad;
+            if(!resumen[it.nombre].maq.includes(envio.maquina)) resumen[it.nombre].maq.push(envio.maquina);
+        });
+    });
 
     document.getElementById('tabla-consolidado').innerHTML = Object.keys(resumen).map(k => {
-        const d = resumen[k]; const sub = d.cant * d.costo; total += sub;
-        return `<tr><td>${k}</td><td>${d.u}</td><td>${d.cant}</td><td>$${d.costo}</td><td>$${sub.toLocaleString()}</td><td>${d.maq.join(',')}</td></tr>`;
-    }).join('');
-    document.getElementById('stat-total').textContent = `$${total.toLocaleString()}`;
+        const d = resumen[k]; 
+        const sub = d.cant * d.costo; 
+        totalGeneral += sub;
+        return `<tr>
+            <td>${k}</td>
+            <td>${d.u}</td>
+            <td class="text-right">${d.cant}</td>
+            <td class="text-right">$${d.costo.toLocaleString()}</td>
+            <td class="text-right"><strong>$${sub.toLocaleString()}</strong></td>
+            <td>${d.maq.join(', ')}</td>
+        </tr>`;
+    }).join('') || '<tr><td colspan="6" style="text-align:center;">No hay datos para liquidar</td></tr>';
+    
+    document.getElementById('stat-total').textContent = `$${totalGeneral.toLocaleString()}`;
+}
+
+function limpiarConsolidado() {
+    if(confirm("¿Seguro que desea borrar todo el consolidado acumulado?")) {
+        setS(KEYS.CONTEOS, []);
+        cargarConsolidado();
+        showToast("Consolidado borrado");
+    }
 }
 
 function renderMaestro() {
     document.getElementById('tabla-maestro').innerHTML = getS(KEYS.PRODUCTOS).map(p => 
-        `<tr><td>${p.nombre}</td><td>${p.unidad}</td><td>$${p.costo}</td></tr>`).join('');
+        `<tr><td>${p.nombre}</td><td>${p.unidad}</td><td>$${parseFloat(p.costo).toLocaleString()}</td></tr>`).join('');
 }
 
+// --- TABS Y CARGA INICIAL ---
 document.querySelectorAll('.tab').forEach(t => t.onclick = () => {
     document.querySelectorAll('.tab, .tab-content').forEach(el => el.classList.remove('active'));
-    t.classList.add('active'); document.getElementById('tab-'+t.dataset.tab).classList.add('active');
+    t.classList.add('active'); 
+    document.getElementById('tab-'+t.dataset.tab).classList.add('active');
     if(t.dataset.tab === 'consolidado') cargarConsolidado();
+    if(t.dataset.tab === 'maestro') renderMaestro();
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -248,12 +310,27 @@ document.addEventListener('DOMContentLoaded', () => {
     if (currentUser) {
         document.getElementById('login-screen').classList.add('hidden');
         document.getElementById('app-screen').style.display = 'block';
-        document.getElementById('display-user').textContent = currentUser.username;
-        document.getElementById('display-machine').textContent = currentUser.machine;
-        if (currentUser.role !== 'admin') document.querySelectorAll('.admin-only').forEach(e => e.remove());
+        document.getElementById('display-user').textContent = currentUser.username.toUpperCase();
+        document.getElementById('display-machine').textContent = currentUser.machine.toUpperCase();
+        
+        // Ocultar pestañas administrativas si es capturador
+        if (currentUser.role !== 'admin') {
+            document.querySelectorAll('.admin-only').forEach(e => e.remove());
+        }
         renderConteoTable();
     }
-    setInterval(() => { document.getElementById('clock').textContent = new Date().toLocaleTimeString('es-CO'); }, 1000);
+    
+    // Reloj
+    setInterval(() => { 
+        document.getElementById('clock').textContent = new Date().toLocaleTimeString('es-CO'); 
+    }, 1000);
+});
+
+// Cerrar resultados de búsqueda si se hace clic fuera
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('#search-product')) {
+        document.getElementById('search-results').classList.remove('show');
+    }
 });
 </script>
 </body>
